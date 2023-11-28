@@ -115,7 +115,7 @@
 <div class="page">
 	{#if state === 'intro'}
 		<div class="intro-text" on:click={() => state = 'game'}>
-			<p>first the coastal cities were beaten down by waves, roads became canals, skyscrapers fell. then the brackish water wound its way up the rivers, seeped into the groundwater, turning green fields barren brown. then the fires. then the storms. refugees came in waves, crashing against walls and borders. war came next, then famine and disease.</p>
+			<p>first the coastal cities were beaten down by waves, roads became canals, skyscrapers fell. then the brackish water wound its way up the rivers, seeped into the groundwater, turning green fields barren brown. then the fires turned the forests to dust, turned the prairies to dust. turned the land to black. then refugees came in waves, crashing against walls and borders. war came next, then famine and disease.</p>
 			<p>civilization collapsed.</p>
 			<p>you and yours and the refugees who will come: you're all that's left.</p>
 			<p>this is <b>the year</b>.</p>
