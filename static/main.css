@@ -1,0 +1,42 @@
+:root {
+	--unit: 16px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, p, td, th {
+	font-family: "Cormorant Garamond";
+}
+h1 {
+	font-size: calc(var(--unit) * 2);
+	font-weight: 800;
+	line-height: calc(var(--unit) * 2);
+}
+h2 {
+	font-size: calc(var(--unit));
+	font-weight: 800;
+	line-height: calc(var(--unit));
+}
+h3 {
+	font-size: calc(var(--unit));
+	font-weight: 100;
+	line-height: calc(var(--unit));
+}
+p {
+	font-size: var(--unit);
+	font-weight: 400;
+	line-height: calc(var(--unit) * 1.5);
+}
+td {
+	font-size: var(--unit);
+	font-weight: 400;
+	line-height: 1;
+}
+th {
+	font-size: var(--unit);
+	font-weight: 800;
+	line-height: 1;
+}
