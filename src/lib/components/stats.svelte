@@ -14,9 +14,9 @@
 	</div>
 	<div class="buildings">
 		<p><b>buildings</b></p>
-		<p>houses: {grid.reduce((a, c) => a += c.building?.type === 'home' ? c.value : 0, 0)}</p>
+		<p>houses: {grid.reduce((a, c) => a += c.building?.type === 'house' ? c.building.level : 0, 0)}</p>
 		{#each possibilities.buildings.filter((d) => d !== 'house') as building}
-			<p>{building}: {grid.reduce((a, c) => a += c.building?.type === building ? c.value : 0, 0)}</p>
+			<p>{building}: {grid.reduce((a, c) => a += c.building?.type === building ? c.building.level : 0, 0)}</p>
 		{/each}
 	</div>
 	<div class="resources">

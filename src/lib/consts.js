@@ -34,7 +34,7 @@ export const values = {
 
 export const starting = {
 	foods: 0,
-	energy: 10,
+	energy: 20,
 	goods: 0,
 	civics: 0,
 	people: 10,

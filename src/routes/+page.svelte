@@ -11,7 +11,7 @@
 	const { decay } = values;
 
 	let selected = null;
-	let state = 'game';
+	let state = 'intro';
 
 	for (let i = 0; i < starting.people; i++) {
 		storehouse.people = [...storehouse.people, new Person()]
@@ -68,17 +68,32 @@
 		}
 
 		const energy = Math.min(counts.engineer, counts.generator);
+		storehouse.energy -= grid.reduce((a, c) => a += c.building?.level ? c.building?.level * 2 : 0, 0)
 		storehouse.energy += energy * storehouse.people.reduce((a, c) => a += c.job === 'engineer' ? c.harvest() : 0, 0);
+		if (storehouse.energy < 0) {
+			state = 'lost';
+			return;
+		}
 
 		const goods = Math.min(counts.worker, counts.factory);
-		storehouse.energy -= goods * Math.max(1, storehouse.weeks * decay);
 		storehouse.goods += goods * storehouse.people.reduce((a, c) => a += c.job === 'worker' ? c.harvest() : 0, 0);
 
 		let civics = Math.min(counts.artist, counts.studio);
 		storehouse.goods -= civics * Math.max(1, storehouse.weeks * decay);
+		storehouse.civics -= storehouse.people.map((d) => d.job ? d.skill[d.job] : 1).reduce((a, c) => a += c / 2, 0);
 		storehouse.civics += civics * storehouse.people.reduce(
 			(a, c) => a += c.job === 'artist' ? c.harvest() : 0, 0
 		);
+		if (storehouse.civics < -50) {
+			state = 'lost';
+			return;
+		} else if (storehouse.civics < -40) {
+			storehouse.people = [...storehouse.people.slice(3)];
+		} else if (storehouse.civics < -30) {
+			storehouse.people = [...storehouse.people.slice(2)];;
+		} else if (storehouse.civics < -20) {
+			storehouse.people = [...storehouse.people.slice(1)];;
+		}
 
 		if (counts.house < storehouse.people.length) {
 			storehouse.civics -= (storehouse.people.length - counts.house) * Math.max(1, storehouse.weeks * decay);
@@ -109,7 +124,7 @@
 	{#if state === 'game'}
 		<div class="game">
 			<header>
-				<h1>the year.</h1>
+				<h1>the year. week {storehouse.weeks}.</h1>
 			</header>
 			<div class="controls">
 				<h2 on:click={harvest}>harvest.</h2>
