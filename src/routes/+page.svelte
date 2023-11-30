@@ -178,19 +178,23 @@
 							<th>working</th>
 						</tr>
 					</thead>
-					<tbody>
-						{#each storehouse.people.sort((a, b) => a.name > b.name) as person}
-							<tr style="background-color: {display[person.job]}">
-								<td>{person.name}</td>
-								<td>{person.job}</td>
-								<td on:click={() => person.job = 'artist'}>{Math.round(person.skill.artist * 100) / 100}</td>
-								<td on:click={() => person.job = 'engineer'}>{Math.round(person.skill.engineer * 100) / 100}</td>
-								<td on:click={() => person.job = 'farmer'}>{Math.round(person.skill.farmer * 100) / 100}</td>
-								<td on:click={() => person.job = 'worker'}>{Math.round(person.skill.worker * 100) / 100}</td>
-							</tr>
-						{/each}
-					</tbody>
 				</table>
+				<div class="people-guts">
+					<table>
+						<tbody>
+							{#each storehouse.people.sort((a, b) => a.name > b.name) as person}
+								<tr style="background-color: {display[person.job]}">
+									<td>{person.name}</td>
+									<td>{person.job}</td>
+									<td on:click={() => person.job = 'artist'}>{Math.round(person.skill.artist * 100) / 100}</td>
+									<td on:click={() => person.job = 'engineer'}>{Math.round(person.skill.engineer * 100) / 100}</td>
+									<td on:click={() => person.job = 'farmer'}>{Math.round(person.skill.farmer * 100) / 100}</td>
+									<td on:click={() => person.job = 'worker'}>{Math.round(person.skill.worker * 100) / 100}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	{/if}
@@ -231,7 +235,7 @@
 	margin-left: var(--unit);
 	margin-right: var(--unit);
 	padding: var(--unit);
-	width: calc(200px + var(--unit) + 200px + var(--unit) + 600px);
+	width: calc((200px * 5) + (var(--unit) * 4));
 }
 
 header {
@@ -280,13 +284,19 @@ header {
 	margin-bottom: var(--unit);
 	margin-left: var(--unit);
 	margin-top: var(--unit);
-	width: calc(200px + var(--unit) + 200px + var(--unit) + 600px);
+	width: calc((200px * 5) + (var(--unit) * 4));
 }
 .people table {
 	background-color: white;
 	border-collapse: collapse;
 	table-layout: fixed;
 	width: 100%;
+}
+.people .people-guts {
+	display: block;
+	height: 400px;
+	overflow-y: scroll;
+	position: relative;
 }
 .people table td,
 .people table th {

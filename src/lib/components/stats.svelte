@@ -21,26 +21,26 @@
 	</div>
 	<div class="resources">
 		<p><b>resources</b></p>
+		 <p>people: {Math.round(storehouse.people.length)}</p>
 		 <p>foods: {Math.round(storehouse.foods)}</p>
 		 <p>energy: {Math.round(storehouse.energy)}</p>
 		 <p>goods: {Math.round(storehouse.goods)}</p>
 		 <p>civics: {Math.round(storehouse.civics)}</p>
-		 <p>people: {Math.round(storehouse.people.length)}</p>
 	</div>
 </div>
 
 <style>
 	.Stats {
+		height: 200px;
+		width: calc((var(--unit) * 3) + (200px * 3));
+	}
+	.Stats div {
 		background-color: white;
 		box-sizing: border-box;
+		float: left;
 		height: 200px;
 		margin-left: var(--unit);
 		padding: var(--unit);
-		width: 600px;
-	}
-	.Stats div {
-		height: 200px;
-		float: left;
-		width: calc(200px - (var(--unit) * 0.75));
+		width: calc(200px);
 	}
 </style>
