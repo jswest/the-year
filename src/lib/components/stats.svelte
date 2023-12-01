@@ -1,7 +1,21 @@
 <script>
 	import { possibilities } from '$lib/consts.js';
+	import { format } from '$lib/util.js';
+	export let history;
 	export let storehouse;
 	export let grid;
+
+	const historical = (attr) => {
+		if (history[attr].length > 0) {
+			if (attr === 'people') {
+				return format(history.people.slice(-1)[0].length)
+			} else {
+				return format(history[attr].slice(-1)[0]);
+			}
+		} else {
+			return 0;
+		}
+	}
 </script>
 
 <div class="Stats">
@@ -21,11 +35,11 @@
 	</div>
 	<div class="resources">
 		<p><b>resources</b></p>
-		 <p>people: {Math.round(storehouse.people.length)}</p>
-		 <p>foods: {Math.round(storehouse.foods)}</p>
-		 <p>energy: {Math.round(storehouse.energy)}</p>
-		 <p>goods: {Math.round(storehouse.goods)}</p>
-		 <p>civics: {Math.round(storehouse.civics)}</p>
+		<p>people: {format(storehouse.people.length)} ({historical('people')})</p>
+		<p>foods: {format(storehouse.foods)} ({historical('foods')})</p>
+		<p>energy: {format(storehouse.energy)} ({historical('energy')})</p>
+		<p>goods: {format(storehouse.goods)} ({historical('goods')})</p>
+		<p>civics: {format(storehouse.civics)} ({historical('civics')})</p>
 	</div>
 </div>
 

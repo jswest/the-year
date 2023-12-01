@@ -1,6 +1,6 @@
 <script>
 	import { display, height, jobToBuilding, possibilities, starting, values, width } from '$lib/consts.js';
-	import { storehouse } from '$lib/stores.js';
+	import { history, storehouse } from '$lib/stores.js';
 	import Building from '$lib/classes/building.js';
 	import Person from '$lib/classes/person.js';
 	import Square from '$lib/classes/square.js';
@@ -59,6 +59,7 @@
 			}
 		}
 
+		history.foods = [...history.foods, storehouse.foods];
 		const food = Math.min(counts.farm, counts.farmer);
 		storehouse.foods += food * storehouse.people.reduce((a, c) => a += c.job === 'farmer' ? c.harvest() : 0, 0);
 		storehouse.foods -= storehouse.people.length * Math.max(1, storehouse.weeks * decay);
@@ -67,6 +68,7 @@
 			return;
 		}
 
+		history.energy = [...history.energy, storehouse.energy];
 		const energy = Math.min(counts.engineer, counts.generator);
 		storehouse.energy -= grid.reduce((a, c) => a += c.building?.level ? c.building?.level * 2 : 0, 0)
 		storehouse.energy += energy * storehouse.people.reduce((a, c) => a += c.job === 'engineer' ? c.harvest() : 0, 0);
@@ -75,9 +77,11 @@
 			return;
 		}
 
+		history.goods = [...history.goods, storehouse.goods];
 		const goods = Math.min(counts.worker, counts.factory);
 		storehouse.goods += goods * storehouse.people.reduce((a, c) => a += c.job === 'worker' ? c.harvest() : 0, 0);
 
+		history.civics = [...history.civics, storehouse.civics];
 		let civics = Math.min(counts.artist, counts.studio);
 		storehouse.goods -= civics * Math.max(1, storehouse.weeks * decay);
 		storehouse.civics -= storehouse.people.map((d) => d.job ? d.skill[d.job] : 1).reduce((a, c) => a += c / 2, 0);
@@ -102,11 +106,16 @@
 		const buildables = grid.filter((d) => d.buildable);
 		buildables[Math.floor(Math.random() * (buildables.length - 1))].destroy();
 
+		history.people = [...history.people, storehouse.people];
 		for (let i = 0; i < Math.ceil(Math.random() * 2); i++) {
 			storehouse.people.push(new Person());
 		}
 		grid = [...grid];
 		storehouse.weeks++;
+
+		if (storehouse.weeks > 52) {
+			state = 'won';
+		}
 	}
 
 
@@ -163,7 +172,7 @@
 					{/each}
 				</svg>
 				<div class="stats">
-					<Stats grid={grid} storehouse={storehouse} />
+					<Stats grid={grid} history={history} storehouse={storehouse} />
 				</div>
 			</div>
 			<div class="people">
@@ -201,6 +210,11 @@
 	{#if state === 'lost'}
 		<div class="intro-text">
 			<p>you lost.</p>
+		</div>
+	{/if}
+	{#if state === 'won'}
+		<div class="intro-text">
+			<p>you won with {storehouse.civis} civics.</p>
 		</div>
 	{/if}
 </div>

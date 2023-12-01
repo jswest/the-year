@@ -1,4 +1,4 @@
-import { starting } from './consts.js';
+import { starting } from "./consts.js";
 
 export const storehouse = {
 	civics: starting.civics,
@@ -7,4 +7,12 @@ export const storehouse = {
 	goods: starting.goods,
 	people: [],
 	weeks: 1,
-}
+};
+
+export const history = {
+	civics: [],
+	energy: [],
+	foods: [],
+	goods: [],
+	people: [],
+};
